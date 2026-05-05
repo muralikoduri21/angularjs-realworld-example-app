@@ -1,0 +1,40 @@
+name: angular js appl
+on:
+    push:
+        branches:
+            - main
+
+permissions:                    
+  checks: write
+  contents: read
+  pull-requests: write
+  security-events: write
+  
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: get the code
+              uses: actions/checkout@v4
+            - name: setup node js
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+            - name: get dependencies
+              run: npm install
+            - name: install gulp
+              run: npm install -g gulp@3
+            - name: codeql init
+              uses: github/codeql-action/init@v4
+              with:
+                languages: javascript
+            - name: build the code
+              run: gulp build  
+            - name: codeql analyze
+              uses: github/codeql-action/analyze@v4
+            - name: uplaod artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: angularjs-app
+                path: dist/
+            
