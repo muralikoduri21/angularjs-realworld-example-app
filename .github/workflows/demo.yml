@@ -19,7 +19,7 @@ jobs:
             - name: setup node js
               uses: actions/setup-node@v4
               with:
-                node-version: 18
+                node-version: 10
             - name: get dependencies
               run: npm install
             - name: install gulp
